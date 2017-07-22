@@ -1,7 +1,8 @@
-var scene, camera, renderer;
+﻿var scene, camera, renderer;
 
 var WIDTH  = window.innerWidth;
 var HEIGHT = window.innerHeight*9/10;
+elapsedTime = 0;
 
 function init() {
     scene = new THREE.Scene();
@@ -9,10 +10,12 @@ function init() {
     initCamera();
     initRenderer();
     document.body.appendChild(renderer.domElement);
+	
 }
 
+
 function initCamera() {
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 10);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 100);
     camera.position.set(0, 8, -3);
     camera.lookAt(scene.position);
 }
@@ -62,7 +65,11 @@ function addStamm() {
 }
 
 function render() {
+	elapsedTime++;
     requestAnimationFrame(render);
+	camera.position.x = scene.position.x + 5.0 * Math.cos( 0.01 * elapsedTime );         
+	camera.position.z = scene.position.z + 5.0 * Math.sin( 0.01 * elapsedTime );
+	camera.lookAt( scene.position );
     renderer.render(scene, camera);
 }
 
